@@ -29,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
                 // Mostrar una notificación con IMPORTANCE_HIGH
                 showHighImportanceNotification("Está entrando en modo Tutor");
 
-                // Aquí puedes iniciar la actividad con los tres botones que mencionaste
-                // Por ejemplo:
-                // Intent intent = new Intent(MainActivity.this, OtraActividad.class);
-                // startActivity(intent);
+                // Iniciar la nueva actividad
+                Intent intent = new Intent(MainActivity.this, DisplayTutor.class);
+                startActivity(intent);
             }
         });
+
     }
 
     private void showHighImportanceNotification(String message) {
