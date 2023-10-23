@@ -6,15 +6,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.lab5_iot.R;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.POST;
 
 public class AsignarTutoria extends AppCompatActivity {
 
@@ -44,35 +42,25 @@ public class AsignarTutoria extends AppCompatActivity {
     }
 
     private void enviarSolicitudPost(String tutorCode, String employeeId) {
-        // Crear una instancia de Retrofit
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.100:3000/")  // Reemplaza con la URL correcta de tu servidor Node.js
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        String url = "http://localhost:3000/asignar-tutoria"; // Reemplaza con la URL correcta de tu servidor Node.js
 
-        // Crear una interfaz para definir el servicio
-        ApiService apiService = retrofit.create(ApiService.class);
-
-        // Realizar la solicitud POST
-        Call<String> call = apiService.asignarTutoria(tutorCode, employeeId);
-        call.enqueue(new Callback<String>() {
+        // Crear una solicitud POST con los datos del tutor y el empleado
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    // Procesa la respuesta del servidor aquí
-                    String message = response.body();
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                } else {
-                    // Manejar errores de la solicitud
-                    Toast.makeText(getApplicationContext(), "Error en la solicitud", Toast.LENGTH_LONG).show();
-                }
+            public void onResponse(String response) {
+                // Procesa la respuesta del servidor aquí
+                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
             }
-
+        }, new Response.ErrorListener() {
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                // Manejar errores de la red
-                Toast.makeText(getApplicationContext(), "Error en la red", Toast.LENGTH_LONG).show();
+            public void onErrorResponse(VolleyError error) {
+                // Manejar errores de la solicitud
+                Toast.makeText(getApplicationContext(), "Error en la solicitud", Toast.LENGTH_LONG).show();
             }
         });
+
+        // Agregar la solicitud a la cola de solicitudes
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
 }
