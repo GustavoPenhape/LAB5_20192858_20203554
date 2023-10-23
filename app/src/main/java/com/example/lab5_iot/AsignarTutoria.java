@@ -42,7 +42,7 @@ public class AsignarTutoria extends AppCompatActivity {
     }
 
     private void enviarSolicitudPost(String tutorCode, String employeeId) {
-        String url = "http://localhost:3000/asignar-tutoria"; // Reemplaza con la URL correcta de tu servidor Node.js
+        String url = "http://localhost:3000/asignartutoria"; // Reemplaza con la URL correcta de tu servidor Node.js
 
         // Crear una solicitud POST con los datos del tutor y el empleado
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
