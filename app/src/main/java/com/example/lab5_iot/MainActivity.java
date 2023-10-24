@@ -1,16 +1,22 @@
 package com.example.lab5_iot;
 
+import static android.Manifest.permission.POST_NOTIFICATIONS;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.lab5_iot.R;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,21 +29,63 @@ public class MainActivity extends AppCompatActivity {
 
         tutorButton = findViewById(R.id.Tutorbutton);
 
-        tutorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Mostrar una notificación con IMPORTANCE_HIGH
-                showHighImportanceNotification("Está entrando en modo Tutor");
+        crearCanalNotificacion("tutorChannel");
 
-                // Iniciar la nueva actividad
-                Intent intent = new Intent(MainActivity.this, DisplayTutor.class);
-                startActivity(intent);
-            }
+        tutorButton.setOnClickListener(view -> {
+            // Mostrar una notificación con IMPORTANCE_HIGH
+            lanzarNotificacion("tutorChannel","Está entrando en modo Tutor");
+            // Iniciar la nueva actividad
+            Intent intent = new Intent(MainActivity.this, DisplayTutorActivity.class);
+            startActivity(intent);
         });
 
     }
 
-    private void showHighImportanceNotification(String message) {
+    public void crearCanalNotificacion(String channelId) {
+        //android.os.Build.VERSION_CODES.O == 26
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId,
+                    "Canal notificaciones tutor",
+                    NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("Canal para notificaciones con prioridad high");
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+            askPermission();
+        }
+    }
+    public void askPermission(){
+        //android.os.Build.VERSION_CODES.TIRAMISU == 33
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ActivityCompat.checkSelfPermission(this, POST_NOTIFICATIONS) ==
+                        PackageManager.PERMISSION_DENIED) {
+
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{POST_NOTIFICATIONS},
+                    101);
+        }
+    }
+    public void lanzarNotificacion(String channelId, String mensaje) {
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_bell_ringing_fillled)
+                .setContentTitle("Canal Tutor")
+                .setContentText(mensaje)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        if (ActivityCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            notificationManager.notify(1, builder.build());
+        }
+    }
+
+
+
+/*
+    private void crearNotificacion(String message) {
         // Configurar la notificación con IMPORTANCE_HIGH
         NotificationChannel channel = new NotificationChannel("tutor_channel", "Tutor Channel", NotificationManager.IMPORTANCE_HIGH);
 
@@ -53,4 +101,6 @@ public class MainActivity extends AppCompatActivity {
         // Mostrar la notificación
         notificationManager.notify(1, notification);
     }
+
+ */
 }
