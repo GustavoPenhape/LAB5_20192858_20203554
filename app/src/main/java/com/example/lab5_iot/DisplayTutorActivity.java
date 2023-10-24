@@ -31,5 +31,6 @@ public class DisplayTutorActivity extends AppCompatActivity {
             Intent intent = new Intent(DisplayTutorActivity.this, DownloadEmployeeActivity.class);
             startActivity(intent);
         });
+        binding.button5.setOnClickListener(view -> finish());
     }
 }

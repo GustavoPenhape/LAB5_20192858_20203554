@@ -18,26 +18,38 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.lab5_iot.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
+
+    ActivityMainBinding binding;
 
     private Button tutorButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        tutorButton = findViewById(R.id.Tutorbutton);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         crearCanalNotificacion("tutorChannel");
+        crearCanalNotificacion("employeeChannel");
 
-        tutorButton.setOnClickListener(view -> {
+        binding.Tutorbutton.setOnClickListener(view -> {
             // Mostrar una notificación con IMPORTANCE_HIGH
             lanzarNotificacion("tutorChannel","Está entrando en modo Tutor");
             // Iniciar la nueva actividad
             Intent intent = new Intent(MainActivity.this, DisplayTutorActivity.class);
             startActivity(intent);
         });
+
+        binding.Trabajadorbutton.setOnClickListener(view ->{
+            lanzarNotificacion("employeeChannel", "Está entrando en modo Empleado");
+            Intent intent = new Intent(MainActivity.this, EmployeeMainActivity.class);
+            startActivity(intent);
+        });
+
+
 
     }
 

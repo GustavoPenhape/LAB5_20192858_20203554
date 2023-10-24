@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.example.lab5_iot.databinding.ActivitySearchEmployeeBinding;
 import com.example.lab5_iot.entity.Employee;
+import com.example.lab5_iot.entity.EmployeeDto;
 import com.example.lab5_iot.service.TutorService;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -34,7 +35,7 @@ public class SearchEmployeeActivity extends AppCompatActivity {
     ActivitySearchEmployeeBinding binding;
     String localhost = "10.100.56.229";
     TutorService tutorService;
-    Employee trabajador;
+    EmployeeDto eDto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,9 @@ public class SearchEmployeeActivity extends AppCompatActivity {
             }else{
                 launcher.launch(permission);
             }
+        });
+        binding.button2.setOnClickListener(view -> {
+            finish();
         });
         binding.button4.setOnClickListener(view -> {
             new MaterialAlertDialogBuilder(this)
@@ -113,16 +117,16 @@ public class SearchEmployeeActivity extends AppCompatActivity {
         }
     }
     private void fetchDataEmployees(String employeeId){
-        tutorService.getEmployeeById(Integer.parseInt(employeeId)).enqueue(new Callback<Employee>() {
+        tutorService.getEmployeeById(Integer.parseInt(employeeId)).enqueue(new Callback<EmployeeDto>() {
             @Override
-            public void onResponse(Call<Employee> call, Response<Employee> response) {
+            public void onResponse(Call<EmployeeDto> call, Response<EmployeeDto> response) {
                 if (response.isSuccessful()){
-                    trabajador = response.body();
+                    eDto = response.body();
                 }
             }
 
             @Override
-            public void onFailure(Call<Employee> call, Throwable t) {
+            public void onFailure(Call<EmployeeDto> call, Throwable t) {
                 Log.d("msg-test", "error: "+t.getMessage());
             }
         });

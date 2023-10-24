@@ -1,26 +1,16 @@
 package com.example.lab5_iot;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.lab5_iot.databinding.ActivityAsignarTutoriaBinding;
-import com.example.lab5_iot.entity.Employee;
 import com.example.lab5_iot.service.TutorService;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -58,6 +48,20 @@ public class AsignarTutoriaActivity extends AppCompatActivity {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(binding.asignarTutoriaDisplay.getWindowToken(), 0);
             asignarTutoria(editTutorCode.getText().toString(), editEmployeeId.getText().toString());
+        });
+
+        binding.button6.setOnClickListener(view -> finish());
+        binding.button7.setOnClickListener(view -> {
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Detalles")
+                    .setMessage("\"Asignar tutorías\" sirve para permitir a los tutores citar a sus trabajadores en reuniones programadas en un plazo cercano. Asegúrate de ingresar correctamente los códigos y que el tutor ingresado sea el manager del empleado.")
+                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .show();
         });
     }
 

@@ -1,6 +1,7 @@
 package com.example.lab5_iot.service;
 
 import com.example.lab5_iot.entity.Employee;
+import com.example.lab5_iot.entity.EmployeeDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ public interface TutorService {
     Call<List<Employee>> getEmployeesByManager(@Path("managerId") int managerId);
 
     @GET("/buscar/{employeeId}")
-    Call<Employee> getEmployeeById(@Path("employeeId") int employeeId);
+    Call<EmployeeDto> getEmployeeById(@Path("employeeId") int employeeId);
 
     @POST("/asignartutorias/{managerId}/{employeeId}")
     Call<HashMap<String, String>> postAssignment(@Path("managerId") int managerId,

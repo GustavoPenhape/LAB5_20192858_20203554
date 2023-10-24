@@ -62,6 +62,10 @@ public class DownloadEmployeeActivity extends AppCompatActivity {
                 fetchDataEmployees(managerId);
         });
 
+        binding.button.setOnClickListener(view -> {
+            finish();
+        });
+
         binding.button3.setOnClickListener(view -> {
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Detalles")
