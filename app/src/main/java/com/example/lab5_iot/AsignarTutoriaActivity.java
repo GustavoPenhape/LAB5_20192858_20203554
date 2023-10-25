@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AsignarTutoriaActivity extends AppCompatActivity {
     ActivityAsignarTutoriaBinding binding;
     TutorService tutorService;
-    String localhost = "10.100.56.229";
+    String localhost = getIpAddress.getIPAddress(true); // true para IPv4, false para IPv6
     private EditText editTutorCode;
     private EditText editEmployeeId;
 

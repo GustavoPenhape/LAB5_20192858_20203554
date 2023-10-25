@@ -44,7 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class EmployeeMainActivity extends AppCompatActivity {
     ActivityEmployeeMainBinding binding;
     Intent intent;
-    String localhost = "10.100.56.229";
+    String localhost = getIpAddress.getIPAddress(true); // true para IPv4, false para IPv6
     TutorService tutorService;
 
     @Override

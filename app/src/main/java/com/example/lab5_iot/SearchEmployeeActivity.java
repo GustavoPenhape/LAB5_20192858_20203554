@@ -3,6 +3,9 @@ package com.example.lab5_iot;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -20,6 +23,7 @@ import com.example.lab5_iot.databinding.ActivitySearchEmployeeBinding;
 import com.example.lab5_iot.entity.Employee;
 import com.example.lab5_iot.entity.EmployeeDto;
 import com.example.lab5_iot.service.TutorService;
+import com.example.lab5_iot.getIpAddress;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import java.io.File;
@@ -33,7 +37,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchEmployeeActivity extends AppCompatActivity {
     ActivitySearchEmployeeBinding binding;
-    String localhost = "10.100.56.229";
+    String localhost = getIpAddress.getIPAddress(true); // true para IPv4, false para IPv6
     TutorService tutorService;
     EmployeeDto eDto;
 
@@ -112,8 +116,26 @@ public class SearchEmployeeActivity extends AppCompatActivity {
         DownloadManager dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         try {
             dm.enqueue(request);
+            lanzarNotificacion("employeeChannel", "Texto descargado", "Descarga completada");
+
+            Snackbar snackbar = Snackbar.make(binding.getRoot(), "Texto descargado", Snackbar.LENGTH_SHORT);
+            snackbar.show();
         }catch (RuntimeException e){
             e.printStackTrace();
+        }
+    }
+    public void lanzarNotificacion(String channelId, String mensaje, String title) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_bell_ringing_fillled)
+                .setContentTitle(title)
+                .setContentText(mensaje)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            notificationManager.notify(1, builder.build());
         }
     }
     private void fetchDataEmployees(String employeeId){

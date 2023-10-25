@@ -36,7 +36,7 @@ public class EmployeeFeedbackActivity extends AppCompatActivity {
 
     ActivityEmployeeFeedbackBinding binding;
     TutorService tutorService;
-    String localhost = "10.100.56.229";
+    String localhost = getIpAddress.getIPAddress(true); // true para IPv4, false para IPv6
     Intent intent;
 
 
