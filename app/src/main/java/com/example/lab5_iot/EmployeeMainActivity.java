@@ -23,16 +23,29 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.lab5_iot.databinding.ActivityEmployeeMainBinding;
 import com.example.lab5_iot.entity.EmployeeDto;
+import com.example.lab5_iot.service.TutorService;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
+import java.util.HashMap;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EmployeeMainActivity extends AppCompatActivity {
     ActivityEmployeeMainBinding binding;
     Intent intent;
+    String localhost = "10.100.56.229";
+    TutorService tutorService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +56,12 @@ public class EmployeeMainActivity extends AppCompatActivity {
         intent = getIntent();
 
         EmployeeDto employeeDto = (EmployeeDto) intent.getSerializableExtra("empleado");
+
+        tutorService = new Retrofit.Builder()
+                .baseUrl("http://"+localhost+":3000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(TutorService.class);
 
         if (employeeDto.getResult().get(0).getMeeting()==0){
             binding.feedback.setVisibility(View.GONE);
@@ -62,7 +81,9 @@ public class EmployeeMainActivity extends AppCompatActivity {
                 Snackbar.make(binding.getRoot(), "No cuenta con tutorías pendientes", Snackbar.LENGTH_SHORT);
             }
             else {
-                // falta implementar consulta en api
+                intent = new Intent(EmployeeMainActivity.this, EmployeeFeedbackActivity.class);
+                intent.putExtra("empleado", employeeDto);
+                startActivity(intent);
             }
 
         });
