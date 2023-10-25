@@ -23,7 +23,6 @@ import com.example.lab5_iot.databinding.ActivitySearchEmployeeBinding;
 import com.example.lab5_iot.entity.Employee;
 import com.example.lab5_iot.entity.EmployeeDto;
 import com.example.lab5_iot.service.TutorService;
-import com.example.lab5_iot.getIpAddress;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import java.io.File;
@@ -37,7 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchEmployeeActivity extends AppCompatActivity {
     ActivitySearchEmployeeBinding binding;
-    String localhost = getIpAddress.getIPAddress(true); // true para IPv4, false para IPv6
+    String localhost = "192.168.18.45";
     TutorService tutorService;
     EmployeeDto eDto;
 

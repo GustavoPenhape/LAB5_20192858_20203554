@@ -39,7 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DownloadEmployeeActivity extends AppCompatActivity {
     ActivityDownloadEmployeeBinding binding;
-    String localhost = getIpAddress.getIPAddress(true); // true para IPv4, false para IPv6
+    String localhost = "192.168.18.45";
     TutorService tutorService;
     List<Employee> trabajadores;
 
