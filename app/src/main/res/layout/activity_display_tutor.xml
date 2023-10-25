@@ -7,6 +7,17 @@
     android:background="@color/blue_background"
     tools:context=".DisplayTutorActivity">
 
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="484dp"
+        android:layout_height="645dp"
+        android:layout_marginEnd="-150dp"
+        android:layout_marginBottom="-120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/user_police"
+        app:tint="@color/blue_contrast" />
+
     <Button
         android:id="@+id/button5"
         style="?attr/materialIconButtonFilledStyle"

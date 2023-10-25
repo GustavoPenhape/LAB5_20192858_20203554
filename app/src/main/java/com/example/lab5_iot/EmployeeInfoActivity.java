@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.example.lab5_iot.databinding.ActivityEmployeeInfoBinding;
 import com.example.lab5_iot.entity.EmployeeDto;
@@ -69,7 +70,9 @@ public class EmployeeInfoActivity extends AppCompatActivity {
             public void onResponse(Call<EmployeeDto> call, Response<EmployeeDto> response) {
                 if (response.isSuccessful()){
                     eDto = response.body();
+                    Log.d("msg-test",eDto.getStatus());
                     if (eDto.getStatus().equals("error")){
+                        Toast.makeText(EmployeeInfoActivity.this, "No se ha encontrado ningun empleado con dicho codigo.", Toast.LENGTH_SHORT).show();
                         Snackbar.make(binding.getRoot(), "No se ha encontrado ningun empleado con dicho codigo.", Snackbar.LENGTH_SHORT).show();
                     }
                     else {

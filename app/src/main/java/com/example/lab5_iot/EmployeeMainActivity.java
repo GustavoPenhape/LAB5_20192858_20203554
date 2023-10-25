@@ -62,7 +62,7 @@ public class EmployeeMainActivity extends AppCompatActivity {
                 Snackbar.make(binding.getRoot(), "No cuenta con tutorías pendientes", Snackbar.LENGTH_SHORT);
             }
             else {
-                descargarConDownloadManager();
+                // falta implementar consulta en api
             }
 
         });
