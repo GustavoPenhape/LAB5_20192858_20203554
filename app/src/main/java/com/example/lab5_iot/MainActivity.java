@@ -37,15 +37,16 @@ public class MainActivity extends AppCompatActivity {
 
         binding.Tutorbutton.setOnClickListener(view -> {
             // Mostrar una notificación con IMPORTANCE_HIGH
-            lanzarNotificacion("tutorChannel","Está entrando en modo Tutor");
+            lanzarNotificacion("tutorChannel","Está entrando en modo Tutor", "Canal tutor");
             // Iniciar la nueva actividad
             Intent intent = new Intent(MainActivity.this, DisplayTutorActivity.class);
             startActivity(intent);
         });
 
         binding.Trabajadorbutton.setOnClickListener(view ->{
-            lanzarNotificacion("employeeChannel", "Está entrando en modo Empleado");
-            Intent intent = new Intent(MainActivity.this, EmployeeMainActivity.class);
+            lanzarNotificacion("employeeChannel", "Está entrando en modo Empleado", "Canal trabajador");
+            Intent intent = new Intent(MainActivity.this, EmployeeInfoActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
 
@@ -78,11 +79,11 @@ public class MainActivity extends AppCompatActivity {
                     101);
         }
     }
-    public void lanzarNotificacion(String channelId, String mensaje) {
+    public void lanzarNotificacion(String channelId, String mensaje, String title) {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.ic_bell_ringing_fillled)
-                .setContentTitle("Canal Tutor")
+                .setContentTitle(title)
                 .setContentText(mensaje)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);

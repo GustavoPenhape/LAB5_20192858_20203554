@@ -1,8 +1,9 @@
 package com.example.lab5_iot.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class EmployeeDto {
+public class EmployeeDto implements Serializable {
     private String status;
     private String message;
     private List<Employee> result;

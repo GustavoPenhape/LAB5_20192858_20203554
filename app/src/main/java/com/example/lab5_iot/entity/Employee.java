@@ -13,6 +13,8 @@ public class Employee implements Serializable {
     private float salary;
     private String employee_feedback;
     private int department_id;
+    private Integer meeting;
+    private String meeting_date;
 
 
     public int getEmployee_id() {
@@ -93,5 +95,21 @@ public class Employee implements Serializable {
 
     public void setEmployee_feedback(String employee_feedback) {
         this.employee_feedback = employee_feedback;
+    }
+
+    public Integer getMeeting() {
+        return meeting;
+    }
+
+    public void setMeeting(Integer meeting) {
+        this.meeting = meeting;
+    }
+
+    public String getMeeting_date() {
+        return meeting_date;
+    }
+
+    public void setMeeting_date(String meeting_date) {
+        this.meeting_date = meeting_date;
     }
 }

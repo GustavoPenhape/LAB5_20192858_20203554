@@ -20,6 +20,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".EmployeeInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EmployeeFeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EmployeeDownSchedActivity"
+            android:exported="false" />
+        <activity
             android:name=".EmployeeMainActivity"
             android:exported="false" />
         <activity
